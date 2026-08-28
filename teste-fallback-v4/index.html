@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MYfretes</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://maps.googleapis.com https://maps.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleapis.com https://*.gstatic.com https://maps.gstatic.com; connect-src 'self' https://maps.googleapis.com https://maps.gstatic.com; frame-src https://*.google.com https://maps.google.com; child-src https://*.google.com https://maps.google.com; base-uri 'self'; form-action 'self' https://wa.me; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,800;1,900&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#2E007B">
+
+<style>
+/* =========================================================
+   MYFRETES — PREMIUM MOBILE APP REDESIGN (visual only)
+   Brand: #2E007B (primary) / #FFD700 (secondary)
+   Inspired by Apple, Material 3, Uber, Nubank, iFood.
+   ========================================================= */
+:root{
+    --c-primary:#2E007B;
+    --c-primary-2:#4A14B8;
+    --c-primary-deep:#1A0048;
+    --c-accent:#FFD700;
+    --c-accent-2:#FFC400;
+    --c-bg-1:#1A0048;
+    --c-bg-2:#2E007B;
+    --c-bg-3:#0E0024;
+    --c-ink:#0F0A23;
+    --c-ink-soft:#3B2C66;
+    --c-muted:#7A6FA0;
+    --c-line:#ECE6F8;
+    --c-line-2:#DCD2F2;
+    --c-surface:#FFFFFF;
+    --c-surface-soft:#F7F3FF;
+    --c-success:#1FB573;
+    --c-error:#E11D48;
+    --r-sm:10px;
+    --r-md:14px;
+    --r-lg:20px;
+    --r-xl:28px;
+    --r-pill:999px;
+    --sh-1:0 1px 2px rgba(15,10,35,.06), 0 2px 8px rgba(15,10,35,.06);
+    --sh-2:0 8px 24px rgba(15,10,35,.10), 0 2px 6px rgba(15,10,35,.06);
+    --sh-3:0 18px 40px -12px rgba(46,0,123,.35), 0 8px 20px rgba(15,10,35,.10);
+    --sh-glow:0 10px 30px rgba(255,215,0,.35);
+    --ease:cubic-bezier(.4,0,.2,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+    --safe-top:env(safe-area-inset-top,0px);
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+
+html,body{margin:0;padding:0;}
+
+body{
+    font-family:'Inter','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;
+    color:#FFFFFF;
+    background:
+        radial-gradient(1200px 600px at 80% -10%, rgba(255,215,0,.10), transparent 60%),
+        radial-gradient(900px 600px at -10% 30%, rgba(74,20,184,.55), transparent 60%),
+        linear-gradient(180deg, #2E007B 0%, #1A0048 55%, #0E0024 100%);
+    background-attachment: fixed;
+    min-height:100vh;
+    padding-top:calc(var(--safe-top) + 8px);
+    padding-bottom:calc(24px + var(--safe-bottom));
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+}
+
+/* Decorative aurora blobs — purely visual, behind content */
+body::before, body::after{
+    content:"";position:fixed;pointer-events:none;z-index:0;
+    width:520px;height:520px;border-radius:50%;
+    filter:blur(90px);opacity:.45;
+}
+body::before{
+    top:-180px;left:-160px;
+    background:radial-gradient(circle, #6B2BFF 0%, transparent 70%);
+    animation:float1 18s var(--ease) infinite alternate;
+}
+body::after{
+    bottom:-220px;right:-180px;
+    background:radial-gradient(circle, #FFD700 0%, transparent 70%);
+    opacity:.18;
+    animation:float2 22s var(--ease) infinite alternate;
+}
+@keyframes float1{to{transform:translate3d(60px,40px,0) scale(1.1);}}
+@keyframes float2{to{transform:translate3d(-50px,-30px,0) scale(1.15);}}
+
+/* =========================================================
+   HEADER / LOGO
+   ========================================================= */
+.logo{
+    text-align:center;
+    font-size:44px;
+    margin:18px 0 6px;
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    letter-spacing:.5px;
+    position:relative;z-index:2;
+    animation:fadeDown .7s var(--ease) both;
+}
+.logo span:nth-child(1){
+    color:#FFD700;font-style:italic;
+    text-shadow:0 6px 24px rgba(255,215,0,.35);
+}
+.logo span:nth-child(2){
+    color:#FFFFFF;font-style:italic;
+    text-shadow:
+        0 0 1px rgba(255,255,255,.4),
+        0 8px 30px rgba(122,68,255,.6);
+}
+
+.subtext{
+    text-align:center;font-size:14px;line-height:1.45;
+    opacity:.85;margin:0 24px 4px;
+    color:#EFE9FF;
+    position:relative;z-index:2;
+    animation:fadeDown .8s .05s var(--ease) both;
+}
+.subtext + .subtext{opacity:.65;margin-bottom:18px;font-size:13px;}
+
+@keyframes fadeDown{
+    from{opacity:0;transform:translateY(-10px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* =========================================================
+   FEEDBACK CAROUSEL (social proof chips)
+   ========================================================= */
+.feedback-container{
+    position:relative;height:46px;margin:6px 14px 14px;
+    display:flex;justify-content:center;align-items:center;overflow:hidden;
+    z-index:2;
+}
+.feedback{
+    position:absolute;max-width:92%;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    color:var(--c-primary);
+    padding:9px 16px;border-radius:var(--r-pill);
+    font-size:13px;font-weight:600;letter-spacing:.1px;
+    box-shadow:0 10px 24px rgba(15,10,35,.25), inset 0 0 0 1px rgba(255,255,255,.5);
+    opacity:0;transform:translateY(12px) scale(.96);
+    transition:all .55s var(--ease);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.feedback.active{opacity:1;transform:translateY(0) scale(1);}
+
+/* =========================================================
+   WHATSAPP FLOAT (top-right pill, glassy)
+   ========================================================= */
+.whatsapp-float{
+    position:fixed;top:calc(var(--safe-top) + 14px);right:14px;
+    background:linear-gradient(135deg,#25D366,#1EBE5D);
+    color:#FFFFFF;
+    width:54px;height:54px;border-radius:50%;
+    text-decoration:none;
+    box-shadow:0 10px 24px rgba(37,211,102,.45), inset 0 0 0 1px rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;z-index:50;
+    transition:transform .25s var(--ease-spring), box-shadow .25s var(--ease);
+    animation:pulse 2.6s var(--ease) infinite;
+}
+.whatsapp-float svg{width:30px;height:30px;fill:currentColor;}
+.whatsapp-float:hover{transform:translateY(-1px) scale(1.04);}
+.whatsapp-float:active{transform:scale(.97);}
+@keyframes pulse{
+    0%,100%{box-shadow:0 10px 24px rgba(37,211,102,.45), inset 0 0 0 1px rgba(255,255,255,.25);}
+    50%{box-shadow:0 14px 30px rgba(37,211,102,.65), inset 0 0 0 1px rgba(255,255,255,.35);}
+}
+
+/* =========================================================
+   LAYOUT CONTAINER
+   ========================================================= */
+.container{
+    max-width:520px;margin:0 auto;padding:6px 16px 24px;
+    position:relative;z-index:2;
+}
+
+/* =========================================================
+   CARDS — glassmorphic floating surfaces
+   ========================================================= */
+.card{
+    background:rgba(255,255,255,.98);
+    color:var(--c-ink);
+    padding:20px 18px;
+    border-radius:var(--r-lg);
+    margin-bottom:16px;
+    box-shadow:var(--sh-2);
+    border:1px solid rgba(255,255,255,.6);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    position:relative;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    animation:cardIn .55s var(--ease) both;
+    scroll-margin-top:80px;
+}
+.card:hover{box-shadow:var(--sh-3);}
+.card:nth-child(1){animation-delay:.02s;}
+.card:nth-child(2){animation-delay:.06s;}
+.card:nth-child(3){animation-delay:.10s;}
+.card:nth-child(4){animation-delay:.14s;}
+.card:nth-child(5){animation-delay:.18s;}
+.card:nth-child(6){animation-delay:.22s;}
+.card:nth-child(7){animation-delay:.26s;}
+.card:nth-child(8){animation-delay:.30s;}
+
+@keyframes cardIn{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+h4{
+    margin:0 0 12px;
+    color:var(--c-primary);
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:-.01em;
+    display:flex;align-items:center;gap:8px;
+}
+
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+.row{display:flex;gap:10px;}
+.row input,.row select{flex:1;min-width:0;}
+
+input,select,textarea{
+    width:100%;
+    padding:13px 14px;
+    margin-top:10px;
+    border-radius:var(--r-md);
+    border:1.5px solid var(--c-line);
+    background:#FAFAFE;
+    color:var(--c-ink);
+    font-size:15px;
+    font-family:inherit;
+    font-weight:500;
+    line-height:1.3;
+    transition:border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
+    -webkit-appearance:none;appearance:none;
+}
+input::placeholder,textarea::placeholder{color:#9A91B5;font-weight:400;}
+
+textarea{
+    min-height:110px;resize:vertical;
+    font-family:inherit;line-height:1.5;
+}
+
+input:hover,select:hover,textarea:hover{border-color:var(--c-line-2);background:#FFFFFF;}
+input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--c-primary);
+    background:#FFFFFF;
+    box-shadow:0 0 0 4px rgba(46,0,123,.10);
+}
+
+/* Native select arrow */
+select{
+    background-image:
+        linear-gradient(45deg,transparent 50%, var(--c-primary) 50%),
+        linear-gradient(135deg, var(--c-primary) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) calc(50% + 2px),
+        calc(100% - 13px) calc(50% + 2px);
+    background-size:5px 5px, 5px 5px;
+    background-repeat:no-repeat;
+    padding-right:38px;
+    cursor:pointer;
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+button{
+    width:100%;
+    padding:16px 18px;
+    border:none;
+    border-radius:var(--r-md);
+    background:linear-gradient(135deg, #FFD700 0%, #FFC400 100%);
+    color:var(--c-primary);
+    font-weight:800;font-size:16px;letter-spacing:.2px;
+    font-family:inherit;
+    margin-top:12px;
+    cursor:pointer;
+    box-shadow:0 10px 24px rgba(255,215,0,.35), inset 0 -2px 0 rgba(0,0,0,.06);
+    transition:transform .15s var(--ease), box-shadow .25s var(--ease), filter .2s var(--ease);
+    position:relative;overflow:hidden;
+}
+button:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(255,215,0,.45);filter:brightness(1.02);}
+button:active{transform:translateY(0) scale(.98);}
+button::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg, transparent 30%, rgba(255,255,255,.45) 50%, transparent 70%);
+    transform:translateX(-100%);transition:transform .8s var(--ease);
+}
+button:hover::after{transform:translateX(100%);}
+
+.hidden{display:none !important;}
+
+/* =========================================================
+   ENDEREÇO (Google Autocomplete) — refined
+   ========================================================= */
+.endereco-row{display:flex;gap:10px;align-items:flex-end;margin-top:10px;}
+.endereco-row input{margin-top:0;flex:1;}
+
+.btn-loc{
+    width:48px;min-width:48px;height:48px;padding:0;margin-top:0;
+    border-radius:var(--r-md);
+    background:var(--c-surface-soft);
+    color:var(--c-primary);
+    font-size:16px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    border:1.5px solid var(--c-line);
+    transition:background .2s var(--ease), transform .15s var(--ease), border-color .2s var(--ease);
+    flex-shrink:0;
+    box-shadow:none;
+}
+.btn-loc:hover{background:#EEE3FF;border-color:var(--c-line-2);transform:none;}
+.btn-loc:active{transform:scale(.94);}
+.btn-loc:disabled{opacity:.5;cursor:not-allowed;}
+.btn-loc::after{display:none;}
+
+.endereco-resultado{
+    margin-top:10px;padding:10px 12px;border-radius:var(--r-md);
+    background:rgba(46,0,123,.06);
+    font-size:13px;color:var(--c-primary);font-weight:600;
+    display:none;
+    border-left:3px solid var(--c-success);
+}
+.endereco-resultado.visivel{display:block;animation:slideIn .35s var(--ease);}
+
+.cep-erro{
+    color:var(--c-error);font-size:12.5px;margin-top:6px;font-weight:600;
+    display:none;
+}
+.cep-erro.visivel{display:block;animation:slideIn .3s var(--ease);}
+.field-error{
+    color:var(--c-error);font-size:12.5px;margin-top:6px;font-weight:600;
+    display:none;
+}
+.field-error.visivel{display:block;animation:slideIn .3s var(--ease);}
+.input-error{
+    border-color:var(--c-error) !important;
+    box-shadow:0 0 0 3px rgba(225,29,72,.12) !important;
+}
+
+@keyframes slideIn{
+    from{opacity:0;transform:translateY(-4px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+.complemento-row{display:flex;gap:10px;margin-top:10px;}
+.complemento-row input{margin-top:0;flex:1;}
+
+/* =========================================================
+   ROTA CARD — premium stat cards
+   ========================================================= */
+.rota-card.card{padding:20px 18px;}
+.rota-grid{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px;}
+.rota-box{
+    flex:1;min-width:140px;
+    background:linear-gradient(160deg, #F7F3FF 0%, #EFE6FF 100%);
+    border:1.5px solid var(--c-line);
+    padding:16px 14px;border-radius:var(--r-md);text-align:center;
+    transition:background .35s var(--ease), border-color .35s var(--ease), transform .25s var(--ease-spring);
+    position:relative;overflow:hidden;
+}
+.rota-box.preenchido{
+    background:linear-gradient(160deg,#FFF9D9 0%, #FFEFAA 100%);
+    border-color:#FFD700;
+    transform:translateY(-2px);
+    box-shadow:0 8px 18px rgba(255,215,0,.25);
+}
+.rota-box .label{
+    font-size:11px;color:var(--c-primary);opacity:.75;margin-bottom:6px;
+    text-transform:uppercase;letter-spacing:.8px;font-weight:700;
+}
+.rota-box .valor{
+    font-size:22px;font-weight:800;color:var(--c-primary);
+    font-feature-settings:"tnum";
+    letter-spacing:-.02em;
+}
+.rota-status{
+    font-size:13px;color:var(--c-ink-soft);opacity:.9;
+    margin-top:12px;text-align:center;font-weight:500;
+}
+.rota-status.calculando::after{
+    content:"";display:inline-block;width:12px;height:12px;
+    margin-left:8px;border-radius:50%;
+    border:2px solid var(--c-primary);border-top-color:transparent;
+    animation:spin .8s linear infinite;vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* =========================================================
+   GOOGLE PAC CONTAINER OVERRIDE
+   ========================================================= */
+.pac-container{
+    border-radius:var(--r-md);
+    border:1px solid var(--c-line);
+    margin-top:6px;
+    box-shadow:var(--sh-3);
+    font-family:'Inter',sans-serif;
+    background:#FFFFFF;
+    overflow:hidden;
+}
+.pac-item{padding:10px 12px;cursor:pointer;border-top:1px solid #F2EDFC;font-size:13.5px;}
+.pac-item:first-child{border-top:none;}
+.pac-item:hover{background:var(--c-surface-soft);}
+.pac-item-query{color:var(--c-primary);font-weight:700;}
+
+/* =========================================================
+   EMBALAGEM CHECKLIST
+   ========================================================= */
+#embalagemItensLista{
+    display:flex;flex-direction:column;gap:8px;margin-top:10px;
+}
+#embalagemItensLista .embalagem-item{
+    display:flex;align-items:center;gap:12px;
+    padding:11px 14px;
+    border-radius:var(--r-md);
+    background:var(--c-surface-soft);
+    border:1.5px solid var(--c-line);
+    color:var(--c-ink);
+    font-size:14px;line-height:1.35;font-weight:500;
+    cursor:pointer;width:100%;
+    transition:background .2s var(--ease), border-color .2s var(--ease), transform .15s var(--ease);
+}
+#embalagemItensLista .embalagem-item:hover{
+    background:#EEE3FF;border-color:var(--c-line-2);
+}
+#embalagemItensLista .embalagem-item:has(input:checked){
+    background:linear-gradient(135deg,#FFF9D9,#FFEFAA);
+    border-color:#FFD700;
+    color:var(--c-primary);
+}
+#embalagemItensLista .embalagem-item input[type="checkbox"]{
+    width:20px;min-width:20px;height:20px;
+    margin:0;padding:0;border:none;border-radius:6px;
+    accent-color:var(--c-primary);
+    flex-shrink:0;cursor:pointer;
+    box-shadow:none;background:transparent;
+}
+#embalagemItensLista .embalagem-item-text{flex:1;word-break:break-word;}
+
+/* =========================================================
+   RESUMO — accordion no fluxo natural
+   ========================================================= */
+.resumo-card{overflow:hidden;}
+.resumo-toggle{
+    width:100%;
+    margin:0;
+    background:linear-gradient(135deg,#FFFDF2,#FFF6C8);
+    color:var(--c-primary);
+    border:1px solid rgba(255,215,0,.45);
+    border-radius:16px;
+    padding:14px 16px;
+    display:flex;align-items:center;justify-content:space-between;
+    font-size:15px;font-weight:800;
+    box-shadow:0 10px 22px rgba(255,215,0,.22), inset 0 1px 0 rgba(255,255,255,.75);
+}
+.resumo-toggle .resumo-meta{
+    display:flex;align-items:center;gap:8px;
+}
+.resumo-chevron{
+    font-size:18px;
+    transition:transform .28s var(--ease);
+}
+.resumo-toggle[aria-expanded="true"] .resumo-chevron{
+    transform:rotate(180deg);
+}
+.resumo-body{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    transition:max-height .35s var(--ease), opacity .25s var(--ease), margin-top .25s var(--ease);
+}
+.resumo-body.is-open{
+    max-height:2200px;
+    opacity:1;
+    margin-top:14px;
+}
+.resumo-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:6px;
+}
+.resumo-item{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    background:transparent;
+    border:0;
+    border-bottom:1px solid var(--c-line);
+    border-radius:0;
+    padding:8px 2px;
+    box-shadow:none;
+}
+.resumo-item:last-child{border-bottom:0;}
+.resumo-tag{
+    flex:0 0 auto;
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:700;
+    color:#5B3A9A;
+    margin:0;
+}
+.resumo-value{
+    flex:1 1 auto;
+    text-align:right;
+    color:var(--c-ink-soft);
+    font-size:12.5px;
+    line-height:1.4;
+    white-space:pre-line;
+}
+.resumo-enviar{
+    margin-top:14px;
+}
+
+.site-footer{
+    max-width:560px;
+    margin:24px auto 28px;
+    padding:0 18px;
+    text-align:center;
+    font-size:13px;
+    color:rgba(255,255,255,.78);
+}
+
+/* =========================================================
+   RESPONSIVE / MOBILE TUNING
+   ========================================================= */
+@media (max-width:380px){
+    .logo{font-size:38px;}
+    .feedback{font-size:12px;padding:8px 14px;}
+    .card{padding:18px 16px;border-radius:18px;}
+    .resumo-tag{font-size:11px;}
+}
+@media (min-width:640px){
+    .container{padding-top:8px;}
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+        animation-duration:.001ms !important;
+        transition-duration:.001ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+<a class="whatsapp-float" href="https://wa.me/5531975135130" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.515 5.26l-.999 3.648 3.973-1.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
+
+<div class="logo"><span>MY</span><span>fretes</span></div>
+
+<div class="feedback-container">
+    <div class="feedback active">🚛 "Chegou super rápido, recomendo demais!"</div>
+    <div class="feedback">⭐ "Melhor frete que já contratei!"</div>
+    <div class="feedback">📦 "Equipe cuidadosa e muito educada."</div>
+    <div class="feedback">💰 "Preço justo e serviço top!"</div>
+    <div class="feedback">⚡ "Atendimento rápido pelo WhatsApp!"</div>
+    <div class="feedback">"Fiz minha mudança com a myfretes, super recomendo!!!"</div>
+    <div class="feedback">"Atendimento rapido, equipe preparada, obrigada!!!"</div>
+    <div class="feedback">"Serviço nota 10!, leve minha mudança de Belo Horizonte para Cuiaba, equipe atenciosa e educada, irei recomendar."</div>
+</div>
+
+<div class="subtext">Preencha suas informações e envie seu orçamento</div>
+<div class="subtext">Simples, rápido e sem burocracia.</div>
+
+<div class="container">
+
+  <!-- DADOS PESSOAIS -->
+  <div class="card" id="sec-dados">
+    <h4>👤 Dados</h4>
+    <input id="nome" placeholder="Nome">
+    <input id="telefone" placeholder="Telefone" inputmode="numeric">
+  </div>
+
+  <!-- DATA E HORÁRIO -->
+  <div class="card" id="sec-data">
+    <h4>📅 Data e Horário do Frete</h4>
+    <div class="row">
+      <input id="data" placeholder="Data (dd/mm/aaaa)" maxlength="10">
+      <input id="horario" placeholder="Horário (hh:mm)" maxlength="5">
+    </div>
+  </div>
+
+  <!-- COLETA -->
+  <div class="card" id="sec-coleta">
+    <h4>📍 Coleta</h4>
+    <div class="endereco-row">
+      <input id="cepColeta" placeholder="Digite o endereço (rua, número, cidade...)" autocomplete="off">
+      <button class="btn-loc" id="btnColeta" onclick="limparEndereco('Coleta')" title="Limpar endereço">✖</button>
+    </div>
+    <span class="cep-erro" id="erroColeta"></span>
+    <div class="endereco-resultado" id="resultadoColeta"></div>
+    <div class="complemento-row hidden" id="complementoColetaRow">
+      <input id="numeroColeta" placeholder="Número" style="max-width:100px;">
+      <input id="complementoColeta" placeholder="Complemento (apto, bloco...)">
+    </div>
+  </div>
+
+  <!-- PARADAS -->
+  <div class="card" id="sec-paradas">
+    <h4>Adicionar paradas?</h4>
+    <select id="parada" onchange="toggleParadas()">
+      <option value="0">Não</option>
+      <option value="1">1 parada</option>
+      <option value="2">2 paradas</option>
+      <option value="3">3 paradas</option>
+    </select>
+
+    <div id="paradasContainer">
+      <div id="parada1Div" class="hidden">
+        <h4 style="margin-top:14px;">📍 Parada 1</h4>
+        <div class="endereco-row">
+          <input id="cepParada1" placeholder="Digite o endereço..." autocomplete="off">
+          <button class="btn-loc" id="btnParada1" onclick="limparEndereco('Parada1')" title="Limpar endereço">✖</button>
+        </div>
+        <span class="cep-erro" id="erroParada1"></span>
+        <div class="endereco-resultado" id="resultadoParada1"></div>
+        <div class="complemento-row hidden" id="complementoParada1Row">
+          <input id="numeroParada1" placeholder="Número" style="max-width:100px;">
+          <input id="complementoParada1" placeholder="Complemento (apto, bloco...)">
+        </div>
+      </div>
+
+      <div id="parada2Div" class="hidden">
+        <h4 style="margin-top:14px;">📍 Parada 2</h4>
+        <div class="endereco-row">
+          <input id="cepParada2" placeholder="Digite o endereço..." autocomplete="off">
+          <button class="btn-loc" id="btnParada2" onclick="limparEndereco('Parada2')" title="Limpar endereço">✖</button>
+        </div>
+        <span class="cep-erro" id="erroParada2"></span>
+        <div class="endereco-resultado" id="resultadoParada2"></div>
+        <div class="complemento-row hidden" id="complementoParada2Row">
+          <input id="numeroParada2" placeholder="Número" style="max-width:100px;">
+          <input id="complementoParada2" placeholder="Complemento (apto, bloco...)">
+        </div>
+      </div>
+
+      <div id="parada3Div" class="hidden">
+        <h4 style="margin-top:14px;">📍 Parada 3</h4>
+        <div class="endereco-row">
+          <input id="cepParada3" placeholder="Digite o endereço..." autocomplete="off">
+          <button class="btn-loc" id="btnParada3" onclick="limparEndereco('Parada3')" title="Limpar endereço">✖</button>
+        </div>
+        <span class="cep-erro" id="erroParada3"></span>
+        <div class="endereco-resultado" id="resultadoParada3"></div>
+        <div class="complemento-row hidden" id="complementoParada3Row">
+          <input id="numeroParada3" placeholder="Número" style="max-width:100px;">
+          <input id="complementoParada3" placeholder="Complemento (apto, bloco...)">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTINO -->
+  <div class="card" id="sec-destino">
+    <h4>📍 Destino</h4>
+    <div class="endereco-row">
+      <input id="cepDestino" placeholder="Digite o endereço..." autocomplete="off">
+      <button class="btn-loc" id="btnDestino" onclick="limparEndereco('Destino')" title="Limpar endereço">✖</button>
+    </div>
+    <span class="cep-erro" id="erroDestino"></span>
+    <div class="endereco-resultado" id="resultadoDestino"></div>
+    <div class="complemento-row hidden" id="complementoDestinoRow">
+      <input id="numeroDestino" placeholder="Número" style="max-width:100px;">
+      <input id="complementoDestino" placeholder="Complemento (apto, bloco...)">
+    </div>
+  </div>
+
+  <!-- ROTA (mesmo padrão dos demais cards) -->
+  <div class="card rota-card">
+    <h4>🗺️ Rota estimada</h4>
+    <div class="rota-grid">
+      <div class="rota-box" id="rotaBoxDistancia">
+        <div class="label">Distância</div>
+        <div class="valor" id="rotaDistancia">—</div>
+      </div>
+      <div class="rota-box" id="rotaBoxTempo">
+        <div class="label">Tempo Estimado</div>
+        <div class="valor" id="rotaTempo">—</div>
+      </div>
+    </div>
+    <div class="rota-status" id="rotaStatus">Preencha Os Endereços para calcular a Rota.</div>
+  </div>
+
+  <!-- ITENS -->
+  <div class="card" id="sec-itens">
+    <h4>📦 Itens a transportar</h4>
+      <div><span class="resumo-tag">📷 Para um orçamento mais preciso, envie fotos ou vídeos dos itens após finalizar o orçamento.</span><span ></span></div>
+    <textarea id="itens" placeholder=" Liste Todos os Itens ( um por linha)."></textarea>
+    <div>⚠️ É essencial listar todos os itens corretamente para evitar alteração no valor final.</div>
+  </div>
+
+  <!-- AJUDANTES -->
+  <div class="card" id="sec-ajudante">
+    <h4>👥 Precisa de ajudante?</h4>
+    <select id="ajuda" onchange="toggleAjuda()">
+      <option value="nao">Não</option>
+      <option value="sim">Sim</option>
+    </select>
+
+    <h4 style="margin-top:15px;">📝 Observações adicionais</h4>
+    <textarea id="observacoes" placeholder="Ex:  Restrições de acesso, portaria, etc."></textarea>
+
+    <div id="ajudaDiv" class="hidden">
+      <h4>Quantidade de Ajudantes</h4>
+      <select id="quantidade_ajudante">
+        <option value="" disabled selected>Selecione a quantidade</option>
+        <option value="1">1 ajudante (ajuda do motorista ou somente uma pessoa)</option>
+        <option value="2">2 ajudantes (duas pessoas para carga e descarga)</option>
+        <option value="3">3 ajudantes (três pessoas para carga e descarga)</option>
+        <option value="4">4 ajudantes (quatro pessoas para carga e descarga)</option>
+      </select>
+
+      <h4>📍 Retirada</h4>
+      <div class="row">
+        <select id="acesso1">
+          <option value="">Tipo do local</option>
+          <option value="casa">Casa</option>
+          <option value="apartamento">Apartamento</option>
+          <option value="loja">Loja</option>
+        </select>
+        <select id="local1">
+          <option value="">Fácil acesso?</option>
+          <option value="nao">não</option>
+          <option value="sim">sim</option>
+        </select>
+      </div>
+      <select id="escadas1" onchange="nivel('1')">
+        <option value="">Tipo de acesso</option>
+        <option value="escadas">Escadas</option><option value="elevador">Elevador</option>
+        <option value="plano">Plano</option><option value="beco">Beco</option>
+      </select>
+      <select id="nivel1" class="hidden">
+        <option value="">Quantidade de andares</option>
+        <option value="1">1 andar</option><option value="2">2 andares</option><option value="3">3 andares</option>
+        <option value="4">4 andares</option><option value="5">5 andares</option><option value="6">6 andares</option>
+        <option value="7">7 andares</option><option value="8">8 andares</option><option value="9">9 andares</option>
+        <option value="10">10 andares</option><option value="11">11 andares</option><option value="12">12 andares</option>
+        <option value="13">13 andares</option><option value="14">14 andares</option><option value="15">15 andares</option>
+        <option value="16">16 andares</option><option value="17">17 andares</option><option value="18">18 andares</option>
+        <option value="19">19 andares</option><option value="20">20 andares</option><option value="21">21 andares</option>
+        <option value="22">22 andares</option><option value="23">23 andares</option>
+      </select>
+
+      <!-- PARADAS AJUDANTES -->
+      <div id="paradaAjuda1" class="hidden">
+        <h4>📍 Parada 1 (ajudantes)</h4>
+        <div class="row">
+          <select id="acessoP1"><option value="">Tipo do local</option><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="loja">Loja</option></select>
+          <select id="localP1"><option value="">Fácil Acesso?</option><option value="sim">Sim</option><option value="nao">Não</option></select>
+        </div>
+        <select id="escadasP1" onchange="nivel('P1')">
+          <option value="">Tipo de acesso</option><option value="escadas">Escadas</option>
+          <option value="elevador">Elevador</option><option value="plano">Plano</option><option value="beco">Beco</option>
+        </select>
+        <select id="nivelP1" class="hidden">
+          <option value="">Quantidade de andares</option>
+          <option value="1">1 andar</option><option value="2">2 andares</option><option value="3">3 andares</option>
+          <option value="4">4 andares</option><option value="5">5 andares</option><option value="6">6 andares</option>
+          <option value="7">7 andares</option><option value="8">8 andares</option><option value="9">9 andares</option>
+          <option value="10">10 andares</option><option value="11">11 andares</option><option value="12">12 andares</option>
+          <option value="13">13 andares</option><option value="14">14 andares</option><option value="15">15 andares</option>
+          <option value="16">16 andares</option><option value="17">17 andares</option><option value="18">18 andares</option>
+          <option value="19">19 andares</option><option value="20">20 andares</option><option value="21">21 andares</option>
+          <option value="22">22 andares</option><option value="23">23 andares</option>
+        </select>
+      </div>
+
+      <div id="paradaAjuda2" class="hidden">
+        <h4>📍 Parada 2 (ajudantes)</h4>
+        <div class="row">
+          <select id="acessoP2"><option value="">Tipo do local</option><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="loja">Loja</option></select>
+          <select id="localP2"><option value="">Fácil Acesso?</option><option value="sim">Sim</option><option value="nao">Não</option></select>
+        </div>
+        <select id="escadasP2" onchange="nivel('P2')">
+          <option value="">Tipo de acesso</option><option value="escadas">Escadas</option>
+          <option value="elevador">Elevador</option><option value="plano">Plano</option><option value="beco">Beco</option>
+        </select>
+        <select id="nivelP2" class="hidden">
+          <option value="">Quantidade de andares</option>
+          <option value="1">1 andar</option><option value="2">2 andares</option><option value="3">3 andares</option>
+          <option value="4">4 andares</option><option value="5">5 andares</option><option value="6">6 andares</option>
+          <option value="7">7 andares</option><option value="8">8 andares</option><option value="9">9 andares</option>
+          <option value="10">10 andares</option><option value="11">11 andares</option><option value="12">12 andares</option>
+          <option value="13">13 andares</option><option value="14">14 andares</option><option value="15">15 andares</option>
+          <option value="16">16 andares</option><option value="17">17 andares</option><option value="18">18 andares</option>
+          <option value="19">19 andares</option><option value="20">20 andares</option><option value="21">21 andares</option>
+          <option value="22">22 andares</option><option value="23">23 andares</option>
+        </select>
+      </div>
+
+      <div id="paradaAjuda3" class="hidden">
+        <h4>📍 Parada 3 (ajudantes)</h4>
+        <div class="row">
+          <select id="acessoP3"><option value="">Tipo do local</option><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="loja">Loja</option></select>
+          <select id="localP3"><option value="">Fácil Acesso?</option><option value="sim">Sim</option><option value="nao">Não</option></select>
+        </div>
+        <select id="escadasP3" onchange="nivel('P3')">
+          <option value="">Tipo de acesso</option><option value="escadas">Escadas</option>
+          <option value="elevador">Elevador</option><option value="plano">Plano</option><option value="beco">Beco</option>
+        </select>
+        <select id="nivelP3" class="hidden">
+          <option value="">Quantidade de andares</option>
+          <option value="1">1 andar</option><option value="2">2 andares</option><option value="3">3 andares</option>
+          <option value="4">4 andares</option><option value="5">5 andares</option><option value="6">6 andares</option>
+          <option value="7">7 andares</option><option value="8">8 andares</option><option value="9">9 andares</option>
+          <option value="10">10 andares</option><option value="11">11 andares</option><option value="12">12 andares</option>
+          <option value="13">13 andares</option><option value="14">14 andares</option><option value="15">15 andares</option>
+          <option value="16">16 andares</option><option value="17">17 andares</option><option value="18">18 andares</option>
+          <option value="19">19 andares</option><option value="20">20 andares</option><option value="21">21 andares</option>
+          <option value="22">22 andares</option><option value="23">23 andares</option>
+        </select>
+      </div>
+
+      <h4>📍 Destino</h4>
+      <div class="row">
+        <select id="acesso2"><option value="">Tipo do local</option><option value="casa">Casa</option><option value="apartamento">Apartamento</option><option value="loja">Loja</option></select>
+        <select id="local2"><option value="">Fácil acesso?</option><option value="nao">não</option><option value="sim">sim</option></select>
+      </div>
+      <select id="escadas2" onchange="nivel('2')">
+        <option value="">Tipo de acesso</option><option value="escadas">Escadas</option>
+        <option value="elevador">Elevador</option><option value="plano">Plano</option><option value="beco">Beco</option>
+      </select>
+      <select id="nivel2" class="hidden">
+        <option value="">Quantidade de andares</option>
+        <option value="1">1 andar</option><option value="2">2 andares</option><option value="3">3 andares</option>
+        <option value="4">4 andares</option><option value="5">5 andares</option><option value="6">6 andares</option>
+        <option value="7">7 andares</option><option value="8">8 andares</option><option value="9">9 andares</option>
+        <option value="10">10 andares</option><option value="11">11 andares</option><option value="12">12 andares</option>
+        <option value="13">13 andares</option><option value="14">14 andares</option><option value="15">15 andares</option>
+        <option value="16">16 andares</option><option value="17">17 andares</option><option value="18">18 andares</option>
+        <option value="19">19 andares</option><option value="20">20 andares</option><option value="21">21 andares</option>
+        <option value="22">22 andares</option><option value="23">23 andares</option>
+      </select>
+
+      <h4>🧰 Itens a Desmontar?</h4>
+      <select id="desmontar" onchange="toggleDesmontar()">
+        <option value="nao">Não</option>
+        <option value="sim">Sim</option>
+      </select>
+      <input id="itensDesmontar" class="hidden" placeholder="Quais itens?">
+
+      <h4>📦 Embalagem dos Itens</h4>
+      <select id="embalagem" onchange="toggleEmbalagem()">
+        <option value="nao">Não</option>
+        <option value="completa">Sim, embalagem completa de todos os itens listados</option>
+        <option value="parcial">Sim, selecionar itens a embalar</option>
+      </select>
+      <div id="embalagemItensContainer" class="hidden">
+        <div style="margin-top:6px;font-size:0.9em;">Selecione os itens que deseja embalar:</div>
+        <div id="embalagemItensLista"></div>
+        <div id="embalagemItensVazio" class="hidden" style="font-size:0.85em;opacity:0.8;">
+          ⚠️ Liste primeiro os itens em "Itens a transportar".
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card resumo-card" id="sec-resumo">
+    <button type="button" class="resumo-toggle" id="resumoToggle" aria-expanded="false" aria-controls="resumoBody">
+      <span class="resumo-meta">📋 Resumo</span>
+      <span class="resumo-chevron" aria-hidden="true">⌄</span>
+    </button>
+    <div class="resumo-body" id="resumoBody">
+      <div class="resumo-grid">
+        <div class="resumo-item"><span class="resumo-tag">📍 Retirada</span><span class="resumo-value" id="resumoRetirada">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">🏁 Destino</span><span class="resumo-value" id="resumoDestino">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">📦 Itens</span><span class="resumo-value" id="resumoItens">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">👷 Ajudantes</span><span class="resumo-value" id="resumoAjudantes">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">📅 Data/Horário</span><span class="resumo-value" id="resumoDataHorario">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">🚚 Frete</span><span class="resumo-value" id="resumoFrete">—</span></div>
+        <div class="resumo-item"><span class="resumo-tag">💰 Contato</span><span class="resumo-value" id="resumoGeral">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="resumo-enviar" onclick="enviar()">ENVIAR ORÇAMENTO NO WHATSAPP 🚀</button>
+
+</div>
+
+<footer class="site-footer">©️ 2026 myfretes.com.br - todos os direitos reservados.</footer>
+
+<script>
+/* =========================================================
+   ESTADO GLOBAL — mantém contrato com montarEndereco()
+   dadosCEP[sufixo] = { logradouro, bairro, localidade, uf, cep,
+                        formatted_address, lat, lng, place_id }
+   ========================================================= */
+const dadosCEP   = {};
+const ultimoTextoEndereco = {};   // último texto digitado por campo — ver fallback
+const autocompletes = {};
+const SUFIXOS_FIXOS = ["Coleta","Parada1","Parada2","Parada3","Destino"];
+
+let rotaUltima      = null;   // { distanciaKm, duracaoTexto }
+let debounceRota    = null;
+let debounceResumo  = null;
+const RESUMO_DEBOUNCE_MS = 80;
+let rotaRequestId   = 0;      // evita race condition entre chamadas concorrentes
+
+/* =========================================================
+   GOOGLE MAPS — callback do <script async>
+   ========================================================= */
+function initMaps(){
+    SUFIXOS_FIXOS.forEach(criarAutocomplete);
+    setRotaStatus("Preencha os Endereços para calcular a Rota.");
+}
+
+function criarAutocomplete(sufixo){
+    const input = document.getElementById("cep" + sufixo);
+    if(!input || autocompletes[sufixo]) return;
+
+    const ac = new google.maps.places.Autocomplete(input, {
+        componentRestrictions: { country: "br" },
+        fields: ["address_components","formatted_address","geometry","place_id"],
+        types: ["geocode"]
+    });
+
+    ac.addListener("place_changed", () => {
+        const place = ac.getPlace();
+        if(!place || !place.geometry){
+            oferecerEnderecoLivre(sufixo);
+            return;
+        }
+        salvarPlace(sufixo, place);
+        // recálculo imediato — sem atraso perceptível ao usuário
+        calcularRota();
+    });
+
+    /* O listener de blur que oferece o texto livre NÃO fica aqui — está no loop
+       de SUFIXOS_FIXOS, mais abaixo. criarAutocomplete só roda se o Maps carregar
+       e chamar initMaps, e o fallback precisa existir justamente quando não roda. */
+    autocompletes[sufixo] = ac;
+}
+
+function extrairComponentes(place){
+    const out = { logradouro:"", bairro:"", localidade:"", uf:"", cep:"" };
+    (place.address_components || []).forEach(c => {
+        const t = c.types || [];
+        if(t.includes("route"))                            out.logradouro = c.long_name;
+        else if(t.includes("sublocality") ||
+                t.includes("sublocality_level_1") ||
+                t.includes("neighborhood"))                out.bairro     = c.long_name;
+        else if(t.includes("administrative_area_level_2") ||
+                t.includes("locality"))                    out.localidade = out.localidade || c.long_name;
+        else if(t.includes("administrative_area_level_1")) out.uf         = c.short_name;
+        else if(t.includes("postal_code"))                 out.cep        = c.long_name;
+    });
+    return out;
+}
+
+function salvarPlace(sufixo, place){
+    const comp = extrairComponentes(place);
+    dadosCEP[sufixo] = {
+        ...comp,
+        formatted_address: place.formatted_address || "",
+        lat:  place.geometry.location.lat(),
+        lng:  place.geometry.location.lng(),
+        place_id: place.place_id || ""
+    };
+
+    const erro = document.getElementById("erro" + sufixo);
+    erro.classList.remove("visivel"); erro.textContent = "";
+
+    const div = document.getElementById("resultado" + sufixo);
+    div.innerHTML = "✓ " + (place.formatted_address || "Endereço selecionado");
+    div.classList.add("visivel");
+
+    const row = document.getElementById("complemento" + sufixo + "Row");
+    if(row) row.classList.remove("hidden");
+}
+
+/* =========================================================
+   FALLBACK — ENDEREÇO EM TEXTO LIVRE
+   Usado quando o Places não devolve sugestão: API fora do ar,
+   quota estourada, ou endereço que o Google não conhece
+   (zona rural, loteamento novo, condomínio).
+   A entrada gravada respeita o contrato de dadosCEP — por isso
+   validação, resumo e mensagem seguem funcionando sem alteração.
+   ========================================================= */
+function oferecerEnderecoLivre(sufixo){
+    const input = document.getElementById("cep" + sufixo);
+    const erro  = document.getElementById("erro" + sufixo);
+    if(!input || !erro) return;
+
+    let texto = sanitizeInputValue(input.value);
+
+    /* Em falha de autenticação do Maps, o widget legado do Places apaga o campo
+       por atribuição direta. Sem isto, o cliente perderia o que digitou e o
+       fallback nem seria oferecido — devolve o texto para ele conferir. */
+    if(!texto && !dadosCEP[sufixo] && ultimoTextoEndereco[sufixo]){
+        texto = ultimoTextoEndereco[sufixo];
+        input.value = texto;
+    }
+
+    if(!texto || dadosCEP[sufixo]){
+        /* campo esvaziado ou já resolvido: retira a oferta pendente */
+        if(erro.querySelector(".btn-endereco-livre")){
+            erro.textContent = "";
+            erro.classList.remove("visivel");
+        }
+        return;
+    }
+    if(erro.querySelector(".btn-endereco-livre")) return;   // já oferecido
+
+    erro.textContent = "Não consegui validar este endereço. Confira se está correto.";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn-endereco-livre";
+    btn.textContent = "Usar este endereço mesmo assim";
+    btn.style.cssText = "margin-top:6px;padding:6px 12px;font:inherit;font-size:.9em;" +
+                        "cursor:pointer;border:1px solid currentColor;border-radius:6px;" +
+                        "background:transparent;color:inherit;";
+    btn.addEventListener("click", () => salvarEnderecoLivre(sufixo, sanitizeInputValue(input.value)));
+
+    erro.appendChild(document.createElement("br"));
+    erro.appendChild(btn);
+    erro.classList.add("visivel");
+}
+
+function salvarEnderecoLivre(sufixo, texto){
+    if(!texto) return;
+
+    /* mesmo formato de salvarPlace, porém sem coordenadas e marcado */
+    dadosCEP[sufixo] = {
+        logradouro: "", bairro: "", localidade: "", uf: "", cep: "",
+        formatted_address: texto,
+        lat: null, lng: null, place_id: "",
+        naoValidado: true
+    };
+
+    const erro = document.getElementById("erro" + sufixo);
+    if(erro){ erro.textContent = ""; erro.classList.remove("visivel"); }
+
+    const campo = document.getElementById("cep" + sufixo);
+    if(campo) clearFieldError(campo);
+
+    const div = document.getElementById("resultado" + sufixo);
+    if(div){
+        /* textContent, não innerHTML: o texto vem do cliente */
+        div.textContent = "⚠️ " + texto + " — não validado pelo mapa";
+        div.classList.add("visivel");
+    }
+
+    const row = document.getElementById("complemento" + sufixo + "Row");
+    if(row) row.classList.remove("hidden");
+
+    calcularRota();
+}
+
+function mostrarErro(sufixo, msg){
+    const erro = document.getElementById("erro" + sufixo);
+    erro.textContent = msg;
+    erro.classList.add("visivel");
+}
+
+function limparEndereco(sufixo){
+    delete dadosCEP[sufixo];
+    delete ultimoTextoEndereco[sufixo];   /* limpeza deliberada: esquece o digitado */
+    const input = document.getElementById("cep" + sufixo);
+    if(input) input.value = "";
+    const div   = document.getElementById("resultado" + sufixo);
+    div.classList.remove("visivel"); div.innerHTML = "";
+    const row   = document.getElementById("complemento" + sufixo + "Row");
+    if(row) row.classList.add("hidden");
+    const erro  = document.getElementById("erro" + sufixo);
+    erro.classList.remove("visivel"); erro.textContent = "";
+    calcularRota();
+}
+
+/* =========================================================
+   MONTAGEM DO ENDEREÇO (assinatura preservada)
+   ========================================================= */
+function montarEndereco(sufixo){
+    const d = dadosCEP[sufixo];
+    if(!d) return "(endereço não preenchido)";
+
+    const numeroEl      = document.getElementById("numero"      + sufixo);
+    const complementoEl = document.getElementById("complemento" + sufixo);
+    const numero        = sanitizeInputValue((numeroEl || {}).value || "");
+    const complemento   = sanitizeInputValue((complementoEl || {}).value || "");
+    if(numeroEl && numeroEl.value !== numero) numeroEl.value = numero;
+    if(complementoEl && complementoEl.value !== complemento) complementoEl.value = complemento;
+
+    /* texto livre: o cliente digitou a linha inteira e não há logradouro
+       estruturado para concatenar — anexa sobre o texto dele. Sem este ramo,
+       um número preenchido com logradouro vazio produziria ", 123". */
+    if(d.naoValidado){
+        let livre = d.formatted_address || "";
+        if(numero)      livre += ", " + numero;
+        if(complemento) livre += " " + complemento;
+        return livre.trim() || "(endereço não preenchido)";
+    }
+
+    if(!numero && !complemento && d.formatted_address){
+        return d.formatted_address;
+    }
+
+    let end = d.logradouro || "";
+    if(numero)       end += ", " + numero;
+    if(complemento)  end += " " + complemento;
+    if(d.bairro)     end += " - " + d.bairro;
+    if(d.localidade) end += ", " + d.localidade + (d.uf ? "/" + d.uf : "");
+    if(d.cep)        end += " - CEP " + d.cep;
+    if(!end.trim())  end = d.formatted_address || "(endereço não preenchido)";
+    return end;
+}
+
+/* =========================================================
+   ROTA — automática, sem botão
+   ========================================================= */
+function setRotaStatus(txt, calculando){
+    const el = document.getElementById("rotaStatus");
+    if(!el) return;
+    el.textContent = txt;
+    el.classList.toggle("calculando", !!calculando);
+}
+
+function resetRotaUI(msg){
+    document.getElementById("rotaDistancia").textContent = "—";
+    document.getElementById("rotaTempo").textContent     = "—";
+    document.getElementById("rotaBoxDistancia").classList.remove("preenchido");
+    document.getElementById("rotaBoxTempo").classList.remove("preenchido");
+    setRotaStatus(msg, false);
+    rotaUltima = null;
+    if(typeof atualizarResumo === "function") atualizarResumo();
+}
+
+/* debounce só usado p/ mudanças não atômicas (ex.: alterar nº de paradas) */
+function agendarRecalculoRota(){
+    clearTimeout(debounceRota);
+    debounceRota = setTimeout(calcularRota, 300);
+}
+
+function calcularRota(){
+    if(typeof google === "undefined" || !google.maps){
+        setRotaStatus("Aguardando carregamento do mapa...", true);
+        return;
+    }
+
+    const origem  = dadosCEP["Coleta"];
+    const destino = dadosCEP["Destino"];
+    if(!origem || !destino){
+        resetRotaUI("Preencha Coleta e Destino para calcular automaticamente.");
+        return;
+    }
+
+    const qtdParadas = parseInt(document.getElementById("parada").value, 10) || 0;
+
+    /* sem coordenadas não há rota. Pular uma parada não validada daria
+       distância errada, o que é pior do que não calcular. */
+    const envolvidos = [origem, destino];
+    for(let i = 1; i <= qtdParadas; i++){
+        const pp = dadosCEP["Parada" + i];
+        if(pp) envolvidos.push(pp);
+    }
+    if(envolvidos.some(p => p.naoValidado || p.lat == null || p.lng == null)){
+        resetRotaUI("Rota não calculada — endereço não validado pelo mapa.");
+        return;
+    }
+
+    const waypoints = [];
+    for(let i = 1; i <= qtdParadas; i++){
+        const p = dadosCEP["Parada" + i];
+        if(p) waypoints.push({ location: { lat: p.lat, lng: p.lng }, stopover: true });
+    }
+
+    const myId = ++rotaRequestId;
+    setRotaStatus("Calculando rota", true);
+
+    const service = new google.maps.DirectionsService();
+    service.route({
+        origin:      { lat: origem.lat,  lng: origem.lng },
+        destination: { lat: destino.lat, lng: destino.lng },
+        waypoints,
+        optimizeWaypoints: false,
+        travelMode: google.maps.TravelMode.DRIVING,
+        region: "br"
+    }, (result, status) => {
+        // descarta respostas obsoletas
+        if(myId !== rotaRequestId) return;
+
+        if(status !== "OK" || !result || !result.routes || !result.routes[0]){
+            resetRotaUI("Não foi possível calcular a rota (" + status + ").");
+            return;
+        }
+
+        let metros = 0, segundos = 0;
+        result.routes[0].legs.forEach(leg => {
+            metros   += leg.distance ? leg.distance.value : 0;
+            segundos += leg.duration ? leg.duration.value : 0;
+        });
+
+        const kmTxt      = (metros/1000).toLocaleString("pt-BR",{maximumFractionDigits:1}) + " km";
+        const duracaoTxt = formatarDuracao(segundos);
+
+        document.getElementById("rotaDistancia").textContent = kmTxt;
+        document.getElementById("rotaTempo").textContent     = duracaoTxt;
+        document.getElementById("rotaBoxDistancia").classList.add("preenchido");
+        document.getElementById("rotaBoxTempo").classList.add("preenchido");
+        setRotaStatus("Rota calculada automaticamente ✅", false);
+
+        rotaUltima = { distanciaKm: kmTxt, duracaoTexto: duracaoTxt };
+        if(typeof atualizarResumo === "function") atualizarResumo();
+    });
+}
+
+function formatarDuracao(segundos){
+    const h = Math.floor(segundos / 3600);
+    const m = Math.round((segundos % 3600) / 60);
+    if(h && m) return h + "h " + m + "min";
+    if(h)      return h + "h";
+    return m + "min";
+}
+
+/* =========================================================
+   TOGGLES (preservados)
+   ========================================================= */
+function toggleParadas(){
+    const qtd = parseInt(document.getElementById("parada").value, 10);
+    document.getElementById("parada1Div").classList.toggle("hidden", qtd < 1);
+    document.getElementById("parada2Div").classList.toggle("hidden", qtd < 2);
+    document.getElementById("parada3Div").classList.toggle("hidden", qtd < 3);
+    atualizarParadasAjuda();
+    agendarRecalculoRota();
+    if(typeof atualizarResumo === "function") atualizarResumo();
+}
+
+function toggleAjuda(){
+    document.getElementById("ajudaDiv").classList.toggle("hidden", document.getElementById("ajuda").value !== "sim");
+    atualizarParadasAjuda();
+    if(typeof atualizarResumo === "function") atualizarResumo();
+}
+
+function atualizarParadasAjuda(){
+    const qtd      = parseInt(document.getElementById("parada").value, 10);
+    const temAjuda = document.getElementById("ajuda").value === "sim";
+    document.getElementById("paradaAjuda1").classList.toggle("hidden", !(temAjuda && qtd >= 1));
+    document.getElementById("paradaAjuda2").classList.toggle("hidden", !(temAjuda && qtd >= 2));
+    document.getElementById("paradaAjuda3").classList.toggle("hidden", !(temAjuda && qtd >= 3));
+}
+
+function toggleDesmontar(){
+    document.getElementById("itensDesmontar").classList.toggle("hidden", document.getElementById("desmontar").value !== "sim");
+    if(typeof atualizarResumo === "function") atualizarResumo();
+}
+
+/* =========================================================
+   EMBALAGEM DOS ITENS — 3 opções:
+   "nao"      → sem campos adicionais
+   "completa" → todos os itens listados em "Itens a transportar"
+   "parcial"  → checkbox list dinâmica vinda do textarea #itens
+   ========================================================= */
+function getItensTransportar(){
+    return document.getElementById("itens").value
+        .split("\n")
+        .map(i => sanitizeInputValue(i))
+        .filter(i => i.length > 0);
+}
+
+function renderEmbalagemChecklist(){
+    const lista = document.getElementById("embalagemItensLista");
+    const vazio = document.getElementById("embalagemItensVazio");
+    if(!lista) return;
+
+    // Preserva seleções anteriores pelo texto do item
+    const selecionadosAntes = new Set(
+        Array.from(lista.querySelectorAll('input[type="checkbox"]:checked'))
+             .map(cb => cb.value)
+    );
+
+    const itens = getItensTransportar();
+    lista.innerHTML = "";
+
+    if(itens.length === 0){
+        vazio.classList.remove("hidden");
+        return;
+    }
+    vazio.classList.add("hidden");
+
+    itens.forEach((item, idx) => {
+        const id = "embItem_" + idx;
+        const label = document.createElement("label");
+        label.setAttribute("for", id);
+        label.className = "embalagem-item";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.id = id;
+        cb.value = item;
+        cb.className = "embalagem-item-cb";
+        if(selecionadosAntes.has(item)) cb.checked = true;
+
+        const span = document.createElement("span");
+        span.className = "embalagem-item-text";
+        span.textContent = item;
+
+        label.appendChild(cb);
+        label.appendChild(span);
+        lista.appendChild(label);
+    });
+}
+
+function toggleEmbalagem(){
+    const valor = document.getElementById("embalagem").value;
+    const container = document.getElementById("embalagemItensContainer");
+    if(valor === "parcial"){
+        container.classList.remove("hidden");
+        renderEmbalagemChecklist();
+    } else {
+        container.classList.add("hidden");
+    }
+    if(typeof atualizarResumo === "function") atualizarResumo();
+}
+
+// Mantém a checklist sincronizada quando o usuário edita "Itens a transportar"
+document.addEventListener("DOMContentLoaded", function(){
+    const itensEl = document.getElementById("itens");
+    if(itensEl){
+        itensEl.addEventListener("input", function(){
+            if(document.getElementById("embalagem").value === "parcial"){
+                renderEmbalagemChecklist();
+            }
+            if(typeof agendarAtualizacaoResumo === "function") agendarAtualizacaoResumo();
+        });
+    }
+});
+
+function valorOuPadrao(v){
+    return (v || "").toString().trim() || "(não informado)";
+}
+
+function getPrimeiroValorPreenchido(ids){
+    for(let i = 0; i < ids.length; i++){
+        const el = document.getElementById(ids[i]);
+        const valor = (el && el.value ? el.value.toString().trim() : "");
+        if(valor) return valor;
+    }
+    return "";
+}
+
+function obterReferenciaEndereco(sufixo){
+    let id = "referencia" + sufixo;
+    if(sufixo === "Coleta"){
+        id = "referenciaColeta";
+    } else if(sufixo === "Destino"){
+        id = "referenciaDestino";
+    }
+    return getPrimeiroValorPreenchido([id]);
+}
+
+function obterTipoVeiculoResumo(){
+    return getPrimeiroValorPreenchido(["tipoVeiculo"]) || "(definido no atendimento)";
+}
+
+function obterEnderecoResumo(sufixo){
+    return montarEndereco(sufixo);
+}
+
+function agendarAtualizacaoResumo(){
+    clearTimeout(debounceResumo);
+    debounceResumo = setTimeout(atualizarResumo, RESUMO_DEBOUNCE_MS);
+}
+
+function atualizarResumo(){
+    const setTxt = function(id, valor){
+        const el = document.getElementById(id);
+        if(el) el.textContent = valor;
+    };
+
+    const itens = getItensTransportar();
+    const ajuda = (document.getElementById("ajuda") || {}).value || "nao";
+    const qtdParadas = parseInt((document.getElementById("parada") || {}).value, 10) || 0;
+    const embalagem = (document.getElementById("embalagem") || {}).value || "nao";
+
+    let embalagemTxt = "sem embalagem";
+    if(embalagem === "completa"){
+        embalagemTxt = "embalagem completa";
+    } else if(embalagem === "parcial"){
+        const selecionados = Array.from(
+            document.querySelectorAll('#embalagemItensLista input[type="checkbox"]:checked')
+        ).map(cb => cb.value);
+        embalagemTxt = "embalagem parcial (" + (selecionados.length ? selecionados.length + " item(s)" : "nenhum") + ")";
+    }
+
+    setTxt("resumoRetirada", obterEnderecoResumo("Coleta"));
+    setTxt("resumoDestino", obterEnderecoResumo("Destino"));
+    setTxt("resumoItens",
+        (itens.length || 0) + " item(s) • " + embalagemTxt
+    );
+    setTxt("resumoAjudantes",
+        ajuda === "sim"
+            ? descreverQtdAjudante((document.getElementById("quantidade_ajudante") || {}).value)
+            : "Não"
+    );
+    setTxt("resumoDataHorario",
+        valorOuPadrao((document.getElementById("data") || {}).value) + " • " +
+        valorOuPadrao((document.getElementById("horario") || {}).value)
+    );
+    setTxt("resumoFrete",
+        qtdParadas + " parada(s) • " +
+        (rotaUltima ? rotaUltima.distanciaKm : "—") + " • " +
+        (rotaUltima ? rotaUltima.duracaoTexto : "—") + " • " +
+        obterTipoVeiculoResumo()
+    );
+    setTxt("resumoGeral",
+        valorOuPadrao((document.getElementById("nome") || {}).value) + " • " +
+        valorOuPadrao((document.getElementById("telefone") || {}).value)
+    );
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    const resumoToggle = document.getElementById("resumoToggle");
+    const resumoBody = document.getElementById("resumoBody");
+    if(resumoToggle && resumoBody){
+        resumoToggle.addEventListener("click", function(){
+            const expanded = resumoToggle.getAttribute("aria-expanded") === "true";
+            resumoToggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+            resumoBody.classList.toggle("is-open", !expanded);
+        });
+    }
+
+    const container = document.querySelector(".container");
+    if(container){
+        container.addEventListener("input", function(){ agendarAtualizacaoResumo(); });
+        container.addEventListener("change", function(){ agendarAtualizacaoResumo(); });
+    }
+    atualizarResumo();
+});
+
+function nivel(id){
+    document.getElementById("nivel"+id).classList.toggle("hidden",
+        document.getElementById("escadas"+id).value !== "escadas");
+}
+
+/* =========================================================
+   CARROSSEL & MÁSCARAS (preservados)
+   ========================================================= */
+let feedbacks = document.querySelectorAll(".feedback");
+let fbIndex   = 0;
+setInterval(() => {
+    feedbacks[fbIndex].classList.remove("active");
+    fbIndex = (fbIndex + 1) % feedbacks.length;
+    feedbacks[fbIndex].classList.add("active");
+}, 3000);
+
+document.getElementById("telefone").addEventListener("input", function(e){
+    let v = e.target.value.replace(/\D/g,"").substring(0,11);
+    if(v.length > 10)     v = v.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+    else if(v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    else if(v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
+    else                  v = v.replace(/^(\d*)/, "($1");
+    e.target.value = v;
+});
+
+document.getElementById("data").addEventListener("input", function(e){
+    let v = e.target.value.replace(/\D/g,"");
+    if(v.length >= 2) v = v.slice(0,2) + "/" + v.slice(2);
+    if(v.length >= 5) v = v.slice(0,5) + "/" + v.slice(5,9);
+    e.target.value = v;
+});
+
+document.getElementById("horario").addEventListener("input", function(e){
+    let v = e.target.value.replace(/\D/g,"").substring(0,4);
+    if(v.length >= 3) v = v.slice(0,2) + ":" + v.slice(2);
+    e.target.value = v;
+});
+
+/* limpa estado se usuário apagar tudo no campo de endereço */
+SUFIXOS_FIXOS.forEach(sufixo => {
+    const input = document.getElementById("cep" + sufixo);
+    if(!input) return;
+
+    input.addEventListener("input", () => {
+        /* Memória do que o cliente digitou. O widget do Places apaga o campo por
+           atribuição direta, e atribuição NÃO dispara 'input' — então esta memória
+           sobrevive exatamente ao caso que precisamos cobrir, e é descartada
+           quando é o próprio cliente quem apaga. */
+        const v = sanitizeInputValue(input.value);
+        if(v) ultimoTextoEndereco[sufixo] = v;
+        else  delete ultimoTextoEndereco[sufixo];
+
+        if(input.value.trim() === "" && dadosCEP[sufixo]){
+            limparEndereco(sufixo);
+        }
+    });
+
+    /* Oferta de texto livre registrada AQUI, no carregamento da página, e não em
+       criarAutocomplete: assim o fallback continua existindo mesmo que o script
+       do Google Maps nunca carregue ou nunca chame initMaps. O atraso deixa o
+       place_changed vencer quando o cliente clica numa sugestão. */
+    input.addEventListener("blur", () => {
+        setTimeout(() => oferecerEnderecoLivre(sufixo), 250);
+    });
+});
+
+const VALIDAR_CEP_BR = /^\d{5}-?\d{3}$/;
+const VALIDAR_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+function sanitizeInputValue(value, options){
+    const cfg = options || {};
+    let txt = (value || "").toString().replace(/\r/g, "");
+    txt = txt.replace(/&lt;|&#60;|&#x3c;/gi, "<").replace(/&gt;|&#62;|&#x3e;/gi, ">");
+    txt = txt.replace(/<\s*\/?\s*script\b[^>]*>/gi, "");
+    txt = txt.replace(/javascript:/gi, "");
+    txt = txt.replace(/\bon\w+\s*=/gi, "");
+    txt = txt.replace(/[<>]/g, "");
+    txt = txt.replace(/[^\S\n]+/g, " ");
+    if(cfg.multiline){
+        return txt.split("\n").map(l => l.trim()).join("\n").trim();
+    }
+    return txt.replace(/\s+/g, " ").trim();
+}
+
+function isFieldActive(el){
+    if(!el || el.disabled || el.type === "hidden") return false;
+    if(el.closest(".hidden")) return false;
+    const st = window.getComputedStyle(el);
+    return st.display !== "none" && st.visibility !== "hidden";
+}
+
+function getFieldErrorElement(field){
+    const id = "erroCampo_" + field.id;
+    let el = document.getElementById(id);
+    if(el) return el;
+    el = document.createElement("div");
+    el.id = id;
+    el.className = "field-error";
+    field.insertAdjacentElement("afterend", el);
+    return el;
+}
+
+function clearFieldError(field){
+    if(!field) return;
+    field.classList.remove("input-error");
+    field.removeAttribute("aria-invalid");
+    const err = field.id ? document.getElementById("erroCampo_" + field.id) : null;
+    if(err){
+        err.textContent = "";
+        err.classList.remove("visivel");
+    }
+}
+
+function setFieldError(field, message){
+    if(!field) return false;
+    field.classList.add("input-error");
+    field.setAttribute("aria-invalid", "true");
+    const err = getFieldErrorElement(field);
+    err.textContent = message;
+    err.classList.add("visivel");
+    return false;
+}
+
+function parseDigits(value){
+    return (value || "").replace(/\D/g, "");
+}
+
+function validarDataBR(valor){
+    if(!/^\d{2}\/\d{2}\/\d{4}$/.test(valor)) return false;
+    const [d, m, y] = valor.split("/").map(Number);
+    const data = new Date(y, m - 1, d);
+    return data.getFullYear() === y && data.getMonth() === (m - 1) && data.getDate() === d;
+}
+
+function validarTelefoneBR(valor){
+    const d = parseDigits(valor);
+    if(d.length === 10) return /^[1-9]{2}[2-9]\d{7}$/.test(d);
+    if(d.length === 11) return /^[1-9]{2}9\d{8}$/.test(d);
+    return false;
+}
+
+function normalizeNumericField(id){
+    const field = document.getElementById(id);
+    if(!field) return;
+    const cleaned = parseDigits(field.value).replace(/^0+(?=\d)/, "");
+    field.value = cleaned;
+}
+
+function validarEnderecoPorSufixo(sufixo, obrigatorio){
+    const field = document.getElementById("cep" + sufixo);
+    if(!field || !isFieldActive(field)) return true;
+    const valor = sanitizeInputValue(field.value);
+    if(valor !== field.value) field.value = valor;
+    if(obrigatorio && !valor){
+        return setFieldError(field, "Campo obrigatório.");
+    }
+    if(valor && !dadosCEP[sufixo]){
+        oferecerEnderecoLivre(sufixo);
+        return setFieldError(field, "Escolha um endereço da lista, ou use o botão 'Usar este endereço mesmo assim' acima.");
+    }
+    if(dadosCEP[sufixo] && dadosCEP[sufixo].cep && !VALIDAR_CEP_BR.test(dadosCEP[sufixo].cep)){
+        return setFieldError(field, "CEP do endereço inválido.");
+    }
+    clearFieldError(field);
+    return true;
+}
+
+function validarFormulario(){
+    let firstError = null;
+    const invalidar = (field, message) => {
+        if(!firstError) firstError = field;
+        return setFieldError(field, message);
+    };
+
+    const requerTexto = (id, message, multiline) => {
+        const field = document.getElementById(id);
+        if(!field || !isFieldActive(field)) return true;
+        const valor = sanitizeInputValue(field.value, { multiline: !!multiline });
+        if(valor !== field.value) field.value = valor;
+        if(!valor) return invalidar(field, message || "Campo obrigatório.");
+        clearFieldError(field);
+        return true;
+    };
+
+    const requerSelect = (id, message) => {
+        const field = document.getElementById(id);
+        if(!field || !isFieldActive(field)) return true;
+        if(!sanitizeInputValue(field.value)) return invalidar(field, message || "Campo obrigatório.");
+        clearFieldError(field);
+        return true;
+    };
+
+    const validarNumericoPositivo = (id, obrigatorio) => {
+        const field = document.getElementById(id);
+        if(!field || !isFieldActive(field)) return true;
+        const valorBruto = sanitizeInputValue(field.value);
+        const digits = parseDigits(valorBruto).replace(/^0+(?=\d)/, "");
+        if(digits !== field.value) field.value = digits;
+        if(!digits && !obrigatorio){
+            clearFieldError(field);
+            return true;
+        }
+        if(!digits) return invalidar(field, "Campo obrigatório.");
+        const numero = Number(digits);
+        if(!Number.isFinite(numero) || numero <= 0){
+            return invalidar(field, "Informe um número válido maior que zero.");
+        }
+        clearFieldError(field);
+        return true;
+    };
+
+    requerTexto("nome", "Informe o nome.");
+    requerTexto("telefone", "Informe o telefone.");
+    requerTexto("data", "Informe a data.");
+    requerTexto("horario", "Informe o horário.");
+    requerTexto("itens", "Informe ao menos um item.", true);
+    requerSelect("parada", "Selecione a quantidade de paradas.");
+    requerSelect("ajuda", "Selecione se precisa de ajudante.");
+
+    const emailField = document.getElementById("email");
+    if(emailField && isFieldActive(emailField)){
+        const email = sanitizeInputValue(emailField.value);
+        if(email !== emailField.value) emailField.value = email;
+        if(email && !VALIDAR_EMAIL.test(email)) invalidar(emailField, "Informe um e-mail válido.");
+        else clearFieldError(emailField);
+    }
+
+    const telefoneField = document.getElementById("telefone");
+    if(telefoneField && isFieldActive(telefoneField) && telefoneField.value && !validarTelefoneBR(telefoneField.value)){
+        invalidar(telefoneField, "Telefone inválido. Use DDD + número (10 ou 11 dígitos).");
+    }
+
+    const dataField = document.getElementById("data");
+    if(dataField && isFieldActive(dataField) && dataField.value && !validarDataBR(dataField.value)){
+        invalidar(dataField, "Data inválida. Use dd/mm/aaaa.");
+    }
+
+    const horarioField = document.getElementById("horario");
+    if(horarioField && isFieldActive(horarioField) && horarioField.value && !/^([01]\d|2[0-3]):([0-5]\d)$/.test(horarioField.value)){
+        invalidar(horarioField, "Horário inválido. Use hh:mm.");
+    }
+
+    const validarEnderecoObrigatorio = (sufixo) => {
+        if(!validarEnderecoPorSufixo(sufixo, true) && !firstError){
+            firstError = document.getElementById("cep" + sufixo);
+        }
+    };
+    validarEnderecoObrigatorio("Coleta");
+    validarEnderecoObrigatorio("Destino");
+
+    const qtdParadas = parseInt((document.getElementById("parada") || {}).value, 10) || 0;
+    for(let i = 1; i <= qtdParadas; i++){
+        validarEnderecoObrigatorio("Parada" + i);
+    }
+
+    ["numeroColeta","numeroParada1","numeroParada2","numeroParada3","numeroDestino"].forEach(id => {
+        validarNumericoPositivo(id, false);
+    });
+
+    const ajuda = (document.getElementById("ajuda") || {}).value;
+    if(ajuda === "sim"){
+        requerSelect("quantidade_ajudante", "Selecione a quantidade de ajudantes.");
+        requerSelect("acesso1", "Selecione o tipo do local na retirada.");
+        requerSelect("local1", "Selecione o acesso na retirada.");
+        requerSelect("escadas1", "Selecione o tipo de acesso na retirada.");
+        if((document.getElementById("escadas1") || {}).value === "escadas"){
+            requerSelect("nivel1", "Selecione os andares da retirada.");
+        }
+        for(let i = 1; i <= qtdParadas; i++){
+            requerSelect("acessoP" + i, "Selecione o tipo do local da parada " + i + ".");
+            requerSelect("localP" + i, "Selecione o acesso da parada " + i + ".");
+            requerSelect("escadasP" + i, "Selecione o tipo de acesso da parada " + i + ".");
+            if((document.getElementById("escadasP" + i) || {}).value === "escadas"){
+                requerSelect("nivelP" + i, "Selecione os andares da parada " + i + ".");
+            }
+        }
+        requerSelect("acesso2", "Selecione o tipo do local no destino.");
+        requerSelect("local2", "Selecione o acesso no destino.");
+        requerSelect("escadas2", "Selecione o tipo de acesso no destino.");
+        if((document.getElementById("escadas2") || {}).value === "escadas"){
+            requerSelect("nivel2", "Selecione os andares do destino.");
+        }
+
+        requerSelect("desmontar", "Selecione a opção de desmontagem.");
+        if((document.getElementById("desmontar") || {}).value === "sim"){
+            requerTexto("itensDesmontar", "Informe os itens para desmontar.", true);
+        }
+
+        requerSelect("embalagem", "Selecione a opção de embalagem.");
+        if((document.getElementById("embalagem") || {}).value === "parcial"){
+            const selecionados = document.querySelectorAll('#embalagemItensLista input[type="checkbox"]:checked');
+            if(selecionados.length === 0){
+                invalidar(document.getElementById("embalagem"), "Selecione ao menos um item para embalagem parcial.");
+            }
+        }
+    }
+
+    if(firstError){
+        firstError.focus({ preventScroll: true });
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+        return false;
+    }
+    return true;
+}
+
+function getSanitizedFieldValue(id, options){
+    const field = document.getElementById(id);
+    if(!field) return "";
+    const value = sanitizeInputValue(field.value, options || {});
+    if(field.value !== value) field.value = value;
+    return value;
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    ["numeroColeta","numeroParada1","numeroParada2","numeroParada3","numeroDestino"].forEach(id => {
+        const field = document.getElementById(id);
+        if(!field) return;
+        field.setAttribute("inputmode", "numeric");
+        field.addEventListener("input", function(){
+            normalizeNumericField(id);
+            clearFieldError(field);
+        });
+    });
+
+    const container = document.querySelector(".container");
+    if(!container) return;
+    container.addEventListener("input", function(e){
+        const target = e.target;
+        if(target && target.matches && target.matches("input,select,textarea")){
+            clearFieldError(target);
+        }
+    });
+    container.addEventListener("change", function(e){
+        const target = e.target;
+        if(target && target.matches && target.matches("input,select,textarea")){
+            clearFieldError(target);
+            if(target.matches('#embalagemItensLista input[type="checkbox"]')){
+                clearFieldError(document.getElementById("embalagem"));
+            }
+        }
+    });
+});
+
+/* =========================================================
+   ENVIO (preserva fluxo + bloco ROTA)
+   ========================================================= */
+function descreverQtdAjudante(valor){
+    const map = {
+        "1": "1 ajudante (ajuda do motorista ou somente uma pessoa)",
+        "2": "2 ajudantes (duas pessoas para carga e descarga)",
+        "3": "3 ajudantes (três pessoas para carga e descarga)",
+        "4": "4 ajudantes (quatro pessoas para carga e descarga)"
+    };
+    return map[valor] || valor || "(não informado)";
+}
+
+function enviar(){
+    if(!validarFormulario()) return;
+
+    const nome = getSanitizedFieldValue("nome");
+    const telefone = getSanitizedFieldValue("telefone");
+    const data = getSanitizedFieldValue("data");
+    const horario = getSanitizedFieldValue("horario");
+
+    const qtdParadas = parseInt(document.getElementById("parada").value, 10);
+
+    let msg = `*ORÇAMENTO MYFRETES*%0A%0A`;
+    msg += `👤 Cliente: ${nome}%0A`;
+    msg += `📞 Telefone: ${telefone}%0A`;
+    msg += `📅 Data: ${data}%0A`;
+    msg += `⏰ Horário previsto: ${horario}%0A%0A`;
+
+    /* avisa o operador quando o endereço não passou pela validação do mapa */
+    const avisoNaoValidado = (sufixo) =>
+        (dadosCEP[sufixo] && dadosCEP[sufixo].naoValidado)
+            ? `⚠️ Endereço não validado pelo mapa — confirmar com o cliente%0A` : "";
+
+    msg += `📍 *COLETA*%0A${montarEndereco("Coleta")}%0A${avisoNaoValidado("Coleta")}%0A`;
+
+    for(let i = 1; i <= qtdParadas; i++){
+        msg += `📍 *PARADA ${i}*%0A${montarEndereco("Parada"+i)}%0A${avisoNaoValidado("Parada"+i)}%0A`;
+    }
+
+    msg += `📍 *DESTINO*%0A${montarEndereco("Destino")}%0A${avisoNaoValidado("Destino")}%0A`;
+
+    if(rotaUltima){
+        msg += `🗺️ *ROTA*%0A`;
+        msg += `Distância: ${rotaUltima.distanciaKm}%0A`;
+        msg += `Tempo estimado: ${rotaUltima.duracaoTexto}%0A%0A`;
+    }
+
+    const itensVal = getSanitizedFieldValue("itens", { multiline: true });
+    let listaItens = itensVal.split("\n").filter(Boolean).map(i => "• " + i).join("%0A");
+    msg += `📦 *ITENS*%0A${listaItens}%0A%0A`;
+
+    const obs = getSanitizedFieldValue("observacoes", { multiline: true });
+    if(obs !== ""){
+        msg += `   *Observações adicionais*%0A${obs.replace(/\n/g,"%0A")}%0A%0A`;
+    }
+
+    const ajudaVal = document.getElementById("ajuda").value;
+    if(ajudaVal === "sim"){
+        const qtdAjudVal = document.getElementById("quantidade_ajudante").value;
+        msg += `👷 *AJUDANTES*%0APrecisa de ajudante: Sim%0AQuantidade: ${descreverQtdAjudante(qtdAjudVal)}%0A%0A`;
+        msg += `🔹 RETIRADA%0A`;
+        msg += `Tipo local: ${document.getElementById("acesso1").value}%0A`;
+        msg += `Fácil acesso: ${document.getElementById("local1").value}%0A`;
+        msg += `Acesso: ${document.getElementById("escadas1").value}%0A`;
+        if(document.getElementById("escadas1").value === "escadas")
+            msg += `Andares: ${document.getElementById("nivel1").value}%0A`;
+        msg += `%0A`;
+
+        for(let i = 1; i <= qtdParadas; i++){
+            const escP = document.getElementById("escadasP"+i);
+            const nivP = document.getElementById("nivelP"+i);
+            msg += `🔹 PARADA ${i} (ajudantes)%0A`;
+            msg += `Tipo local: ${document.getElementById("acessoP"+i).value}%0A`;
+            msg += `Fácil acesso: ${document.getElementById("localP"+i).value}%0A`;
+            msg += `Acesso: ${escP.value}%0A`;
+            if(escP.value === "escadas") msg += `Andares: ${nivP.value}%0A`;
+            msg += `%0A`;
+        }
+
+        msg += `🔹 DESTINO%0A`;
+        msg += `Tipo local: ${document.getElementById("acesso2").value}%0A`;
+        msg += `Fácil acesso: ${document.getElementById("local2").value}%0A`;
+        msg += `Acesso: ${document.getElementById("escadas2").value}%0A`;
+        if(document.getElementById("escadas2").value === "escadas")
+            msg += `Andares: ${document.getElementById("nivel2").value}%0A`;
+
+        const desmontar = document.getElementById("desmontar").value;
+        msg += `🛠️ Desmontagem: ${desmontar}%0A`;
+        if(desmontar === "sim")
+            msg += `Itens para desmontar: ${getSanitizedFieldValue("itensDesmontar", { multiline: true })}%0A`;
+
+        const embalagem = document.getElementById("embalagem").value;
+        if(embalagem === "completa"){
+            msg += `📦 Embalagem dos itens: Sim — embalagem completa de todos os itens%0A`;
+        } else if(embalagem === "parcial"){
+            const selecionados = Array.from(
+                document.querySelectorAll('#embalagemItensLista input[type="checkbox"]:checked')
+            ).map(cb => cb.value);
+            msg += `📦 Embalagem dos itens: Sim — itens selecionados%0A`;
+            msg += `Itens para embalar: ${selecionados.length ? selecionados.join(", ") : "(nenhum item selecionado)"}%0A`;
+        } else {
+            msg += `📦 Embalagem dos itens: Não%0A`;
+        }
+    } else {
+        msg += `👷 *AJUDANTES*%0APrecisa de ajudante: Não%0A%0A`;
+    }
+
+    window.open("https://wa.me/5531975135130?text=" + msg, "_blank");
+}
+
+window.gm_authFailure = function(){
+    setRotaStatus("Falha de autenticação Google Maps (verifique restrições da chave).", false);
+    SUFIXOS_FIXOS.forEach(s => mostrarErro(s, "Falha ao carregar Google Maps."));
+};
+</script>
+
+<!-- Google Maps JavaScript API (Places + Directions) -->
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVh8-wXJFjiYKnnas83xbrnPjnd7wI5Ho&libraries=places&language=pt-BR&region=BR&callback=initMaps"></script>
+
+</body>
+</html>

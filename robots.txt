@@ -1,0 +1,2 @@
+User-agent: *
+Disallow: /teste-fallback-v4/
